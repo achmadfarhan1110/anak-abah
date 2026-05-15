@@ -1458,7 +1458,7 @@
     Contoh: src="1000x-ghea-indrawari.mp3"
   -->
   <audio id="bgMusic" loop preload="auto">
-    <source src="" type="audio/mpeg" />
+    <source src="image/musik/backsound.mp3" type="audio/mpeg" />
   </audio>
 
   <!-- Music button -->
@@ -1903,23 +1903,19 @@
     }
 
     function tryPlay() {
-      if (audio.src && audio.src !== window.location.href) {
-        audio.play().then(() => {
-          musicPlaying = true;
-          setMusicIcon(true);
-        }).catch(() => {
-          musicPlaying = false;
-          setMusicIcon(false);
-        });
-      }
+      audio.play().then(() => {
+        musicPlaying = true;
+        setMusicIcon(true);
+      }).catch(() => {
+        musicPlaying = false;
+        setMusicIcon(false);
+      });
     }
 
-    // Try autoplay after intro (2.5s)
     setTimeout(() => {
       if (!musicPlaying) tryPlay();
     }, 2600);
 
-    // Fallback: scroll trigger
     window.addEventListener('scroll', () => {
       if (!scrollTriggered && !musicPlaying) {
         scrollTriggered = true;
@@ -1927,16 +1923,16 @@
       }
     }, { once: false });
 
-    // Manual toggle
     musicBtn.addEventListener('click', () => {
-      if (audio.src && audio.src !== window.location.href) {
-        if (musicPlaying) {
-          audio.pause();
-          musicPlaying = false;
-          setMusicIcon(false);
-        } else {
-          tryPlay();
-        }
+      if (musicPlaying) {
+        audio.pause();
+        musicPlaying = false;
+        setMusicIcon(false);
+      } else {
+        audio.play().then(() => {
+          musicPlaying = true;
+          setMusicIcon(true);
+        }).catch(e => console.error("Playback error:", e));
       }
     });
 
