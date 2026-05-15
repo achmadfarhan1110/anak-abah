@@ -268,6 +268,13 @@
       width: 46px; height: 46px;
       pointer-events: none;
       z-index: 499;
+      transform: scale(0.2);
+      opacity: 0;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease-in-out;
+    }
+    .music-rings.playing {
+      transform: scale(1);
+      opacity: 1;
     }
     .music-ring {
       position: absolute;
@@ -277,13 +284,14 @@
       opacity: 0;
       animation: musicRing 2s ease-out infinite;
     }
+    .music-ring:nth-child(1) { animation-delay: 0s; }
     .music-ring:nth-child(2) { animation-delay: 0.6s; }
     .music-ring:nth-child(3) { animation-delay: 1.2s; }
+    
     @keyframes musicRing {
-      0%   { transform: scale(1); opacity: 0.5; }
+      0%   { transform: scale(1); opacity: 0.6; }
       100% { transform: scale(2.4); opacity: 0; }
     }
-    .music-rings.paused .music-ring { animation-play-state: paused; }
 
     /* ============================================================
        NAV
@@ -1570,7 +1578,7 @@
           </div>
           <div class="tentang-deco-sticker">🌷</div>
           <div class="tentang-deco-card">
-            "Bukan yang sekedar tampil Beauty, tapi juga Syar'i yang selalu menjadikan dirimu indah."
+            "Bukan yang sekedar tampilan Beauty, tapi juga Syar'i yang selalu menjadikan dirimu indah."
           </div>
         </div>
 
@@ -1899,7 +1907,7 @@
     function setMusicIcon(playing) {
       iconPlay.style.display  = playing ? 'none'  : 'block';
       iconPause.style.display = playing ? 'block' : 'none';
-      musicRings.classList.toggle('paused', !playing);
+      musicRings.classList.toggle('playing', playing);
     }
 
     function tryPlay() {
